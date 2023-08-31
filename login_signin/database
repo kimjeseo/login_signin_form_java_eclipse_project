@@ -1,0 +1,232 @@
+package malabananLoginSignIn;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Desktop;
+import java.awt.Font;
+import java.awt.LayoutManager;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+public class MalabananLoginDatabase extends JFrame implements ActionListener {
+  JFrame Login;
+  
+  private String Username;
+  
+  private String Password;
+  
+  static String summery;
+  
+  private JFrame f = new JFrame("Add new students name application");
+  
+  private JTextField UsernameRegister = new JTextField(10);
+  
+  private JPasswordField PasswordRegister = new JPasswordField(10);
+  
+  ArrayList<String[]> Accounts = (ArrayList)new ArrayList<>();
+  
+  private JButton OkBtn = new JButton("Register");
+  
+  private JButton Database = new JButton("Open Database \r\n(FOUNDER ONLY) ");
+  
+  private final JLabel label = new JLabel("WELCOME TO KAYE'S WORLD!");
+  
+  private JTextField UsernameLogin;
+  
+  private JPasswordField PasswordLogin;
+  
+  public MalabananLoginDatabase() {
+    this.f.getContentPane().setLayout(new BorderLayout());
+    JPanel P = new JPanel();
+    P.setBackground(new Color(255, 160, 122));
+    P.setLayout((LayoutManager)null);
+    this.label.setBounds(79, 23, 431, 52);
+    this.label.setForeground(new Color(128, 0, 128));
+    this.label.setFont(new Font("Segoe Script", 3, 25));
+    P.add(this.label);
+    this.UsernameRegister.setBounds(198, 384, 239, 34);
+    P.add(this.UsernameRegister);
+    JLabel lblPassword = new JLabel("PASSWORD");
+    lblPassword.setForeground(new Color(47, 79, 79));
+    lblPassword.setFont(new Font("Segoe Script", 1, 15));
+    lblPassword.setBounds(80, 449, 107, 23);
+    P.add(lblPassword);
+    JLabel lblUsername = new JLabel("USERNAME");
+    lblUsername.setForeground(new Color(47, 79, 79));
+    lblUsername.setFont(new Font("Segoe Script", 1, 15));
+    lblUsername.setBounds(80, 388, 112, 24);
+    P.add(lblUsername);
+    this.PasswordRegister.setBounds(197, 444, 240, 34);
+    P.add(this.PasswordRegister);
+    this.f.getContentPane().add(P, "Center");
+    JLabel label_3 = new JLabel("SIGN IN");
+    label_3.setHorizontalAlignment(0);
+    label_3.setForeground(new Color(220, 20, 60));
+    label_3.setFont(new Font("Segoe Script", 1, 20));
+    label_3.setBackground(new Color(240, 255, 240));
+    label_3.setBounds(245, 98, 144, 30);
+    P.add(label_3);
+    JLabel label01 = new JLabel("USERNAME");
+    label01.setForeground(new Color(47, 79, 79));
+    label01.setFont(new Font("Segoe Script", 1, 15));
+    label01.setBackground(new Color(153, 255, 255));
+    label01.setBounds(80, 157, 107, 25);
+    P.add(label01);
+    JLabel label2 = new JLabel("PASSWORD");
+    label2.setForeground(new Color(47, 79, 79));
+    label2.setFont(new Font("Segoe Script", 1, 15));
+    label2.setBackground(new Color(153, 255, 255));
+    label2.setBounds(80, 221, 107, 24);
+    P.add(label2);
+    this.UsernameLogin = new JTextField();
+    this.UsernameLogin.setForeground(Color.BLACK);
+    this.UsernameLogin.setFont(new Font("Times New Roman", 0, 12));
+    this.UsernameLogin.setColumns(10);
+    this.UsernameLogin.setBounds(198, 152, 239, 34);
+    P.add(this.UsernameLogin);
+    this.PasswordLogin = new JPasswordField();
+    this.PasswordLogin.setForeground(Color.BLACK);
+    this.PasswordLogin.setFont(new Font("Times New Roman", 0, 12));
+    this.PasswordLogin.setEchoChar('*');
+    this.PasswordLogin.setBackground(Color.WHITE);
+    this.PasswordLogin.setBounds(198, 216, 239, 34);
+    P.add(this.PasswordLogin);
+    JLabel label4 = new JLabel("REGISTER");
+    label4.setHorizontalAlignment(0);
+    label4.setForeground(new Color(220, 20, 60));
+    label4.setFont(new Font("Segoe Script", 1, 20));
+    label4.setBounds(222, 324, 189, 34);
+    JButton LogInBtm = new JButton("Login");
+    LogInBtm.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent arg0) {
+            boolean userExist = false;
+            for (int i = 0; i < MalabananLoginDatabase.this.Accounts.size(); i++) {
+              String[] ME = MalabananLoginDatabase.this.Accounts.get(i);
+              if (ME[0].equals("") && ME[1].equals("")) {
+                userExist = false;
+                JOptionPane.showMessageDialog(null, "Username Or Password are BLANK");
+              } 
+              if (ME[0].equals(MalabananLoginDatabase.this.UsernameLogin.getText()) && ME[1].equals(MalabananLoginDatabase.this.PasswordLogin.getText())) {
+                userExist = true;
+              } else if (userExist) {
+                JOptionPane.showMessageDialog(null, "Access Granted!");
+                MalabananLoginDatabase.this.UsernameLogin.setText((String)null);
+                MalabananLoginDatabase.this.PasswordLogin.setText((String)null);
+              } else {
+                MalabananLoginDatabase.this.UsernameLogin.setText((String)null);
+                MalabananLoginDatabase.this.PasswordLogin.setText((String)null);
+                JOptionPane.showMessageDialog(null, "Access Denied!");
+              } 
+            } 
+          }
+        });
+    LogInBtm.setForeground(Color.BLACK);
+    LogInBtm.setFont(new Font("Segoe Script", 1, 12));
+    LogInBtm.setBackground(new Color(255, 182, 193));
+    LogInBtm.setBounds(201, 270, 89, 23);
+    JButton ResetBtn1 = new JButton("Reset");
+    ResetBtn1.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+            MalabananLoginDatabase.this.UsernameLogin.setText((String)null);
+            MalabananLoginDatabase.this.PasswordLogin.setText((String)null);
+          }
+        });
+    ResetBtn1.setForeground(Color.BLACK);
+    ResetBtn1.setFont(new Font("Segoe Script", 1, 12));
+    ResetBtn1.setBackground(new Color(255, 182, 193));
+    ResetBtn1.setBounds(348, 270, 89, 23);
+    P.add(label4);
+    P.add(LogInBtm);
+    P.add(ResetBtn1);
+    this.OkBtn.setForeground(new Color(0, 0, 0));
+    this.OkBtn.setBackground(new Color(255, 182, 193));
+    this.OkBtn.setFont(new Font("Segoe Script", 1, 12));
+    this.OkBtn.setBounds(198, 500, 89, 23);
+    P.add(this.OkBtn);
+    JButton ResetBtn2 = new JButton("Reset");
+    ResetBtn2.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+            MalabananLoginDatabase.this.PasswordRegister.setText((String)null);
+            MalabananLoginDatabase.this.UsernameRegister.setText((String)null);
+          }
+        });
+    ResetBtn2.setForeground(Color.BLACK);
+    ResetBtn2.setFont(new Font("Segoe Script", 1, 12));
+    ResetBtn2.setBackground(new Color(255, 182, 193));
+    ResetBtn2.setBounds(348, 500, 89, 23);
+    P.add(ResetBtn2);
+    this.Database.setForeground(new Color(0, 0, 0));
+    this.Database.setBackground(new Color(255, 182, 193));
+    this.Database.setFont(new Font("Segoe Script", 1, 12));
+    this.Database.setBounds(187, 569, 261, 34);
+    P.add(this.Database);
+    this.Database.addActionListener(this);
+    this.OkBtn.addActionListener(this);
+    this.f.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\pc amsel\\Downloads\\Kaye-design-fluffy-name.png"));
+    this.f.setTitle("Welcome to Kaye's World!");
+    this.f.setVisible(true);
+    this.f.setSize(600, 710);
+  }
+  
+  public void actionPerformed(ActionEvent e) {
+    if (e.getSource() == this.OkBtn) {
+      this.Username = "";
+      this.Password = "";
+      this.Username = this.UsernameRegister.getText().trim();
+      this.Password = this.PasswordRegister.getText().trim();
+      summery = "USERNAME: " + this.Username + "\r\nPASSWORD: " + this.Password;
+      String Data = SampleDatabase.summery;
+      try {
+        BufferedWriter reader = new BufferedWriter(new FileWriter(new File("C:\\Users\\pc amsel\\Desktop/Database.txt"), true));
+        reader.write(Data);
+        reader.newLine();
+        reader.close();
+        System.out.println("Done!");
+      } catch (IOException E) {
+        System.out.println("Error is " + E);
+      } 
+    } 
+    if (e.getSource() == this.Database) {
+      JFileChooser chooser = new JFileChooser("C:\\Users\\pc amsel\\Desktop/");
+      int x = chooser.showOpenDialog(null);
+      if (x == 0) {
+        File file = chooser.getSelectedFile();
+        try {
+          Desktop.getDesktop().open(file);
+        } catch (IOException EE) {
+          System.out.println("You Failed!");
+        } 
+      } 
+    } 
+    String[] ME = { this.UsernameRegister.getText(), this.PasswordRegister.getText() };
+    this.Accounts.add(ME);
+    if (ME[0].equals("") && ME[1].equals("")) {
+      JOptionPane.showMessageDialog(null, "Username Or Password are BLANK");
+    } else {
+      JOptionPane.showMessageDialog(this.Login, "Succesfully Registered");
+    } 
+    this.UsernameRegister.setText("");
+    this.PasswordRegister.setText("");
+  }
+  
+  private void PopulateUsers(ArrayList<String[]> listOfUser) {
+    for (int z = 0; z < listOfUser.size(); z++)
+      String[] arrayOfString = listOfUser.get(z); 
+  }
+  
+  public static void main(String[] args) {}
+}
